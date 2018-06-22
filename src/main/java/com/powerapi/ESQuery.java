@@ -259,8 +259,8 @@ public class ESQuery {
                 .add("_index", index)
                 .add("_type", "doc").build();
 
-        System.out.println(header.toString());
-        System.out.println(Converter.resultatApplicationToJson(resultatApplication));
+        System.out.println("header: "+ header.toString());
+        System.out.println("resultat: "+ Converter.resultatApplicationToJson(resultatApplication));
 
         String jsonToSend = header.toString() + "\n" + Converter.resultatApplicationToJson(resultatApplication);
 
