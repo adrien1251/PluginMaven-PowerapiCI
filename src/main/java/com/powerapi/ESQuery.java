@@ -65,6 +65,8 @@ public class ESQuery {
             TestData endTest = testList.remove(testList.size() - 1);
             TestData beginTest = null;
             for (TestData t : testList) {
+                System.out.println("le test: "+t);
+                System.out.println("le test: "+t.getTestName());
                 if (t.getTestName().equals(endTest.getTestName())) {
                     beginTest = t;
                     break;
