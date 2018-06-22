@@ -253,6 +253,7 @@ public class ESQuery {
     }
 
     public void sendResultat(String index, ResultatApplication resultatApplication) {
+        System.out.println("before header");
         /* Create header to send data */
         JsonObject header = Json.createObjectBuilder()
                 .add("_index", index)
