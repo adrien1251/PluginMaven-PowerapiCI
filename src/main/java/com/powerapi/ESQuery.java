@@ -247,7 +247,7 @@ public class ESQuery {
             System.out.println("spliting2: "+testCSV.get(i));
             String[] test = testCSV.get(i).split("mW");
             List<TestData> testList = new ArrayList<TestData>();
-            for (String st : powerapi) {
+            for (String st : test) {
                 testList.add(new TestData(st));
             }
             System.out.println("split");
