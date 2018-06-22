@@ -58,7 +58,7 @@ public class ESQuery {
         List<PowerapiCI> powerapiCIList = new ArrayList<PowerapiCI>();
         ArrayList<Double> powerList = new ArrayList<Double>();
 
-        while (!testList.isEmpty()) {
+        while (!testList.isEmpty() && testList.size() >= 2) {
 
             powerList.clear();
 
