@@ -41,7 +41,7 @@ public class ESQuery {
 
             if (!(connection.getResponseCode() < HttpURLConnection.HTTP_BAD_REQUEST)) {
                 System.out.println("Youps.. Une erreur est survenue lors de l'envoie d'une donnée!");
-                System.out.println("Code: "+connection.getResponseCode());
+                System.out.println("Code: "+connection.getResponseCode()+", "+connection.getResponseMessage());
             }
         } catch (Exception e) {
             e.printStackTrace();
