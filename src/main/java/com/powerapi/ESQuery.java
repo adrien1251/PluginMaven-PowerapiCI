@@ -65,16 +65,12 @@ public class ESQuery {
             TestData endTest = testList.remove(testList.size() - 1);
             TestData beginTest = null;
             for (TestData t : testList) {
-                System.out.println("le test: "+t);
-                System.out.println("le test: "+t.getTestName());
                 if (t.getTestName().equals(endTest.getTestName())) {
                     beginTest = t;
                     break;
                 }
             }
             testList.remove(beginTest);
-
-            System.out.println("Begin test: "+beginTest.getTestName()+", end test: "+endTest.getTestName());
 
             if (beginTest.getTimestamp() > endTest.getTimestamp()) {
                 TestData tmp = beginTest;
@@ -228,38 +224,27 @@ public class ESQuery {
         String appName = urlScm.substring(urlScm.lastIndexOf("/") + 1, urlScm.length() - 4);
         Map<String, String> classes = ESQuery.parseSurefireXML(XMLClasses);
 
-
         List<List<PowerapiCI>> powerapiCIList = new ArrayList<List<PowerapiCI>>();
 
-        System.out.println("boucle");
         for (int i = 0; i < powerapiCSV.size(); i++) {
-            System.out.println("boucle: "+i);
-            System.out.println("spliting: "+powerapiCSV.get(i));
-
             String[] powerapi = powerapiCSV.get(i).split("mW");
             System.out.println(powerapi.length);
             List<PowerapiData> powerapiList = new ArrayList<PowerapiData>();
             for (String st : powerapi) {
                 powerapiList.add(new PowerapiData(st));
             }
-            System.out.println("split");
 
-            System.out.println("spliting2: "+testCSV.get(i));
             String[] test = testCSV.get(i).split("mW");
             List<TestData> testList = new ArrayList<TestData>();
             for (String st : test) {
                 testList.add(new TestData(st));
             }
-            System.out.println("split");
 
-            System.out.println(powerapiList.size()+", "+testList.size());
             powerapiCIList.add(findListPowerapiCI(powerapiList, testList));
         }
 
-        System.out.println("finn boucle");
 
         ResultatApplication resultatApplication = new ResultatApplication(debutApp, branch, buildName, commitName, appName, urlScm);
-        System.out.println("converter");
         resultatApplication = Converter.fillResultatApplication(resultatApplication, powerapiCIList, classes);
 
         System.out.println("send");
@@ -273,8 +258,12 @@ public class ESQuery {
                 .add("_index", index)
                 .add("_type", "doc").build();
 
+        System.out.println(header.toString());
+        System.out.println(Converter.resultatApplicationToJson(resultatApplication));
 
         String jsonToSend = header.toString() + "\n" + Converter.resultatApplicationToJson(resultatApplication);
+
+        System.out.println(jsonToSend);
         sendPOSTMessage(Constants.ELASTIC_BULK_PATH, jsonToSend);
     }
 
