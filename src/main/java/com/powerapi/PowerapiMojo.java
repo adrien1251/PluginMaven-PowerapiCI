@@ -21,6 +21,12 @@ public class PowerapiMojo extends AbstractMojo {
     public void execute() throws MojoExecutionException {
         executes();
 
+
+        System.out.println("Powerapi: "+powerapiCSVList.size());
+        System.out.println("test: "+testCSVList.size());
+
+
+
         new ESQuery().sendPowerapiciData(125412451, "MASTER", "40", "unname", "uneurl", powerapiCSVList, testCSVList, getXmlReport());
 
         getLog().info("Data send");
