@@ -27,17 +27,17 @@ public class PowerapiMojo extends AbstractMojo {
     }
 
     public void executes() {
-        String[] cmd = {"sh", "-c", "(mvn test -DforkCount=0 | grep timestamp= | cut -d '-' -f 2 | tr -d ' ') > test.csv & powerapi duration 30 modules procfs-cpu-simple monitor --frequency 50 --console --pids \\$! | grep muid) > data.csv;"};
+        String[] cmd = {"sh", "-c", "(mvn test -DforkCount=0 | grep timestamp= | cut -d '-' -f 2 | tr -d ' ') > test1.csv & powerapi duration 30 modules procfs-cpu-simple monitor --frequency 50 --console --pids \\$! | grep muid) > data1.csv;"};
 
         try {
             Process p = Runtime.getRuntime().exec(cmd);
             getLog().info(readProc(p));
 
             p.waitFor();
-            Process powerapiProc = Runtime.getRuntime().exec(new String[]{"sh", "-c", "cat data.csv | tr '\n' ' '"});
+            Process powerapiProc = Runtime.getRuntime().exec(new String[]{"sh", "-c", "cat data1.csv | tr '\n' ' '"});
             powerapiCSVList.add(readProc(powerapiProc));
 
-            Process testProc = Runtime.getRuntime().exec(new String[]{"sh", "-c", "cat test.csv | grep timestamp= | cut -d '-' -f 2 | tr -d ' '"});
+            Process testProc = Runtime.getRuntime().exec(new String[]{"sh", "-c", "cat test1.csv | grep timestamp= | cut -d '-' -f 2 | tr -d ' '"});
             testCSVList.add(readProc(testProc));
         } catch (IOException e) {
             e.printStackTrace();
