@@ -302,6 +302,14 @@ public class ESQuery {
             e.printStackTrace();
         }
 
+        System.out.println("Classes");
+        Set<String> key = classes.keySet();
+        for(String s : key){
+            System.out.println(s+": "+classes.get(s));
+        }
+
+
+
         return classes;
     }
 

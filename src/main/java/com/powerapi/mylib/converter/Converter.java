@@ -80,23 +80,14 @@ public class Converter {
     }
 
     public static ResultatApplication fillResultatApplication(ResultatApplication resultatApplication, List<List<PowerapiCI>> powerapiCIList, final Map<String, String> classes) {
-        System.out.println("Fill powerapi");
         System.out.println(powerapiCIList.get(0).size());
         List<Classe> classeL = new ArrayList<Classe>();
 
         String lastTestName = "";
         String lastClassName = "";
         for (PowerapiCI papici : powerapiCIList.get(0)) {
-            System.out.println("On est dans la boucle");
             if (!papici.getTestName().equals(lastTestName)) {
-
-                System.out.println("Nom différent");
                 if (!classes.get(papici.getTestName()).equals(lastClassName)) {
-
-
-                    System.out.println("On rajoute une classe");
-
-
                     lastClassName = classes.get(papici.getTestName());
                     classeL.add(new Classe(lastClassName));
                 }
