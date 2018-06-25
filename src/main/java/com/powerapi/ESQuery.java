@@ -59,8 +59,7 @@ public class ESQuery {
         List<PowerapiCI> powerapiCIList = new ArrayList<PowerapiCI>();
         ArrayList<Double> powerList = new ArrayList<Double>();
         System.out.println("testList:"+ testList.size());
-        while (!testList.isEmpty()) {
-            System.out.println("on passe dans le while quand meme");
+        while (!testList.isEmpty() && testList.size() >= 2) {
             powerList.clear();
 
             TestData endTest = testList.remove(testList.size() - 1);
