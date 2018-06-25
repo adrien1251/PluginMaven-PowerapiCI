@@ -15,6 +15,11 @@ public class Converter {
 
 
     public static String resultatApplicationToJson(ResultatApplication resultatApplication) {
+        System.out.println("c: "+resultatApplication.getClasses().size());
+        System.out.println("m: "+resultatApplication.getClasses().get(0).getMethods().size());
+        System.out.println("i: "+resultatApplication.getClasses().get(0).getMethods().get(0).getIterations().size());
+        System.out.println("i: "+resultatApplication.getClasses().get(0).getMethods().get(0).getIterations().get(0).getPower_data().size());
+        
         JsonObject content = Json.createObjectBuilder()
                 .add("timestamp", resultatApplication.getTimestamp())
                 .add("branch", resultatApplication.getBranch())
@@ -65,7 +70,7 @@ public class Converter {
                 jsonAMethods.add(objectMethod);
             }
             objectClasse.put("classes", jsonAMethods);
-
+            System.out.println("object: "+objectClasse.toString());
             jsonAClasse.add(objectClasse);
         }
         System.out.println(jsonAClasse.toString());
