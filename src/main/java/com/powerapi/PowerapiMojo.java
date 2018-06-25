@@ -23,6 +23,7 @@ public class PowerapiMojo extends AbstractMojo {
 
         String xmlRepot = getXmlReport();
         System.out.println("xmlReport: "+xmlRepot);
+        System.out.println("Fin xmlreport");
         new ESQuery().sendPowerapiciData(125412451, "MASTER", "40", "unname", "uneurl", powerapiCSVList, testCSVList, xmlRepot);
 
         getLog().info("Data send");
@@ -33,6 +34,7 @@ public class PowerapiMojo extends AbstractMojo {
         String[] cmd1 = {"sh", "-c", "(mvn test -DforkCount=0 | grep timestamp= | cut -d '-' -f 2 | tr -d ' ') > test1.csv & (powerapi duration 30 modules procfs-cpu-simple monitor --frequency 50 --console --all | grep muid) > data1.csv;"};
 
         try {
+            getLog().info("En cours d'execution...");
             Process p = Runtime.getRuntime().exec(cmd1);
             getLog().info(readProc(p));
 
@@ -65,7 +67,7 @@ public class PowerapiMojo extends AbstractMojo {
     }
 
     public String getXmlReport() {
-        String[] cmd = {"sh", "-c", "cat target/surefire-reports/TEST-* | sed s/'testsuite>'/'testsuite>\\\\n'/g | grep 'testsuite\\\\|testcase'"};
+        String[] cmd = {"sh", "-c", "cat target/surefire-reports/TEST-* | sed s/'testsuite>'/'testsuite>\n'/g | grep 'testsuite|testcase'"};
         String retour = "";
         try {
             Process powerapiProc = Runtime.getRuntime().exec(cmd);
