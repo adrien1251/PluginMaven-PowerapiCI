@@ -15,11 +15,11 @@ public class Converter {
 
 
     public static String resultatApplicationToJson(ResultatApplication resultatApplication) {
-        System.out.println("c: "+resultatApplication.getClasses().size());
-        System.out.println("m: "+resultatApplication.getClasses().get(0).getMethods().size());
-        System.out.println("i: "+resultatApplication.getClasses().get(0).getMethods().get(0).getIterations().size());
-        System.out.println("i: "+resultatApplication.getClasses().get(0).getMethods().get(0).getIterations().get(0).getPower_data().size());
-        
+        System.out.println("c: " + resultatApplication.getClasses().size());
+        System.out.println("m: " + resultatApplication.getClasses().get(0).getMethods().size());
+        System.out.println("i: " + resultatApplication.getClasses().get(0).getMethods().get(0).getIterations().size());
+        System.out.println("i: " + resultatApplication.getClasses().get(0).getMethods().get(0).getIterations().get(0).getPower_data().size());
+
         JsonObject content = Json.createObjectBuilder()
                 .add("timestamp", resultatApplication.getTimestamp())
                 .add("branch", resultatApplication.getBranch())
@@ -32,21 +32,21 @@ public class Converter {
                 .add("commit_name", resultatApplication.getCommit_name()).build();
 
         JsonArray jsonAClasse = Json.createArrayBuilder().build();
-        for(Classe c : resultatApplication.getClasses()) {
+        for (Classe c : resultatApplication.getClasses()) {
             JsonObject objectClasse = Json.createObjectBuilder()
                     .add("name", c.getName())
                     .add("energy", c.getEnergy())
                     .add("duration", c.getDuration()).build();
 
             JsonArray jsonAMethods = Json.createArrayBuilder().build();
-            for(Methods m : c.getMethods()){
+            for (Methods m : c.getMethods()) {
                 JsonObject objectMethod = Json.createObjectBuilder()
                         .add("name", m.getName())
                         .add("energy", m.getEnergy())
                         .add("duration", m.getDuration()).build();
 
                 JsonArray jsonAIterations = Json.createArrayBuilder().build();
-                for(Iteration i : m.getIterations()){
+                for (Iteration i : m.getIterations()) {
                     JsonObject objectIteration = Json.createObjectBuilder()
                             .add("n", i.getNumber())
                             .add("energy", i.getEnergy())
@@ -54,8 +54,8 @@ public class Converter {
                             .add("time_end", i.getTime_end()).build();
 
                     JsonArray jsonAPowerdata = Json.createArrayBuilder().build();
-                    for(PowerData p : i.getPower_data()){
-                        JsonObject objectPowerdata= Json.createObjectBuilder()
+                    for (PowerData p : i.getPower_data()) {
+                        JsonObject objectPowerdata = Json.createObjectBuilder()
                                 .add("power", p.getPower())
                                 .add("timestamp", p.getTimestamp()).build();
 
@@ -70,10 +70,10 @@ public class Converter {
                 jsonAMethods.add(objectMethod);
             }
             objectClasse.put("classes", jsonAMethods);
-            System.out.println("object: "+objectClasse.toString());
+
             jsonAClasse.add(objectClasse);
         }
-        System.out.println(jsonAClasse.toString());
+
         content.put("classes", jsonAClasse);
 
         return content.toString() + '\n';
@@ -85,8 +85,16 @@ public class Converter {
         String lastTestName = "";
         String lastClassName = "";
         for (PowerapiCI papici : powerapiCIList.get(0)) {
+            System.out.println("On est dans la boucle");
             if (!papici.getTestName().equals(lastTestName)) {
+                
+                System.out.println("Nom différent");
                 if (!classes.get(papici.getTestName()).equals(lastClassName)) {
+
+
+                    System.out.println("On rajoute un classe");
+
+
                     lastClassName = classes.get(papici.getTestName());
                     classeL.add(new Classe(lastClassName));
                 }
