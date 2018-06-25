@@ -1,6 +1,7 @@
 package com.powerapi;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonParser;
 import com.powerapi.mylib.Constants;
 import com.powerapi.mylib.converter.Converter;
 import com.powerapi.mylib.json.ResultatApplication;

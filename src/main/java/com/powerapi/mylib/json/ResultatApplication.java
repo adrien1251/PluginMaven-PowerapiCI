@@ -1,11 +1,14 @@
 package com.powerapi.mylib.json;
 
+import com.powerapi.mylib.Constants;
+
 import java.util.List;
 
 public class ResultatApplication {
     private long timestamp;
     private String branch;
     private String build_name;
+    private String build_url;
     /**
      * Energy total of the project
      */
@@ -34,6 +37,7 @@ public class ResultatApplication {
         this.commit_name = commit_name;
         this.app_name = app_name;
         this.scm_url = scm_url;
+        this.build_url = Constants.BUILD_URL + branch + "/" + build_name + "/pipeline";
     }
 
     public long getTimestamp() {
@@ -107,6 +111,8 @@ public class ResultatApplication {
     public void setScm_url(String scm_url) {
         this.scm_url = scm_url;
     }
+
+    public String getBuild_url(){ return build_url; }
 
 
 }
