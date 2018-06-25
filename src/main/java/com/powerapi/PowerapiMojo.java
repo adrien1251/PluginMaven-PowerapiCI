@@ -39,7 +39,7 @@ public class PowerapiMojo extends AbstractMojo {
     }
 
     public void executes() {
-        String[] cmd = {"sh", "-c", "echo toto; (mvn test -DforkCount=0 | grep timestamp= | cut -d '-' -f 2 | tr -d ' ') > test1.csv & powerapi duration 30 modules procfs-cpu-simple monitor --frequency 50 --console --pids \\$! | grep muid) > data1.csv;"};
+        String[] cmd = {"sh", "-c", "echo toto > untest.csv; (mvn test -DforkCount=0 | grep timestamp= | cut -d '-' -f 2 | tr -d ' ') > test1.csv & powerapi duration 30 modules procfs-cpu-simple monitor --frequency 50 --console --pids \\$! | grep muid) > data1.csv;"};
 
         try {
             Process p = Runtime.getRuntime().exec(cmd);
