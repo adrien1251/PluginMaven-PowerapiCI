@@ -234,7 +234,7 @@ public class ESQuery {
             for (String st : powerapi) {
                 powerapiList.add(new PowerapiData(st));
             }
-
+            System.out.println(testCSV);
             String[] test = testCSV.get(i).split("\n");
             List<TestData> testList = new ArrayList<TestData>();
             for (String st : test) {
