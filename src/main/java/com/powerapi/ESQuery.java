@@ -60,7 +60,7 @@ public class ESQuery {
         ArrayList<Double> powerList = new ArrayList<Double>();
 
         while (!testList.isEmpty() && testList.size() >= 2) {
-
+            System.out.println("on passe dans le while quand meme");
             powerList.clear();
 
             TestData endTest = testList.remove(testList.size() - 1);
@@ -111,7 +111,7 @@ public class ESQuery {
             }
 
         }
-
+        System.out.println("powerapiList: "+powerapiList.size()+", powerapiCIList: "+powerapiCIList.size() );
         return addEstimatedEnergyFormTests(powerapiCIList, powerapiList);
     }
 
