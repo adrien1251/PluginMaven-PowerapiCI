@@ -58,6 +58,12 @@ public class ESQuery {
     public static List<PowerapiCI> findListPowerapiCI(List<PowerapiData> powerapiList, List<TestData> testList) {
         List<PowerapiCI> powerapiCIList = new ArrayList<PowerapiCI>();
         ArrayList<Double> powerList = new ArrayList<Double>();
+
+
+        System.out.println("PowerapiList: "+powerapiList.size()+", testList: " +testList.size());
+
+
+
         while (!testList.isEmpty() && testList.size() >= 2) {
             powerList.clear();
 
