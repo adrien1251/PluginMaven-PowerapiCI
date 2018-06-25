@@ -64,16 +64,18 @@ public class PowerapiMojo extends AbstractMojo {
     }
 
     public String readProc(Process p) throws IOException {
+        System.out.println("On lit le proc");
         String retour = "";
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
         String line = "";
         while ((line = reader.readLine()) != null) {
             retour += line;
-            getLog().info(line);
+            System.out.println("Lecture: "+line);
         }
         reader.close();
 
+        System.out.println("fin de lecture");
         return retour;
     }
 
