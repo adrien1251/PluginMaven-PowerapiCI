@@ -58,8 +58,8 @@ public class ESQuery {
     public static List<PowerapiCI> findListPowerapiCI(List<PowerapiData> powerapiList, List<TestData> testList) {
         List<PowerapiCI> powerapiCIList = new ArrayList<PowerapiCI>();
         ArrayList<Double> powerList = new ArrayList<Double>();
-
-        while (!testList.isEmpty() && testList.size() >= 2) {
+        System.out.println("testList:"+ testList.size());
+        while (!testList.isEmpty()) {
             System.out.println("on passe dans le while quand meme");
             powerList.clear();
 
