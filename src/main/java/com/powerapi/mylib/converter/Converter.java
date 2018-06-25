@@ -1,5 +1,6 @@
 package com.powerapi.mylib.converter;
 
+import com.google.gson.Gson;
 import com.powerapi.PowerapiCI;
 import com.powerapi.mylib.Constants;
 import com.powerapi.mylib.json.*;
@@ -15,12 +16,8 @@ public class Converter {
 
 
     public static String resultatApplicationToJson(ResultatApplication resultatApplication) {
-        System.out.println("c: " + resultatApplication.getClasses().size());
-        System.out.println("m: " + resultatApplication.getClasses().get(0).getMethods().size());
-        System.out.println("i: " + resultatApplication.getClasses().get(0).getMethods().get(0).getIterations().size());
-        System.out.println("i: " + resultatApplication.getClasses().get(0).getMethods().get(0).getIterations().get(0).getPower_data().size());
-
-        JsonObject content = Json.createObjectBuilder()
+        return new Gson().toJson(resultatApplication).toString() + '\n';
+        /*JsonObject content = Json.createObjectBuilder()
                 .add("timestamp", resultatApplication.getTimestamp())
                 .add("branch", resultatApplication.getBranch())
                 .add("build_url", Constants.BUILD_URL + resultatApplication.getBranch() + "/" + resultatApplication.getBuild_name() + "/pipeline")
@@ -76,7 +73,7 @@ public class Converter {
 
         content.put("classes", jsonAClasse);
 
-        return content.toString() + '\n';
+        return content.toString() + '\n';*/
     }
 
     public static ResultatApplication fillResultatApplication(ResultatApplication resultatApplication, List<List<PowerapiCI>> powerapiCIList, final Map<String, String> classes) {

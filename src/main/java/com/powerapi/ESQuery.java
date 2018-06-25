@@ -41,7 +41,7 @@ public class ESQuery {
 
             if (!(connection.getResponseCode() < HttpURLConnection.HTTP_BAD_REQUEST)) {
                 System.out.println("Youps.. Une erreur est survenue lors de l'envoie d'une donnée!");
-                System.out.println("Code: "+connection.getResponseCode()+", "+connection.getResponseMessage());
+                System.out.println("Code: " + connection.getResponseCode() + ", " + connection.getResponseMessage());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,7 +58,6 @@ public class ESQuery {
     public static List<PowerapiCI> findListPowerapiCI(List<PowerapiData> powerapiList, List<TestData> testList) {
         List<PowerapiCI> powerapiCIList = new ArrayList<PowerapiCI>();
         ArrayList<Double> powerList = new ArrayList<Double>();
-        System.out.println("testList:"+ testList.size());
         while (!testList.isEmpty() && testList.size() >= 2) {
             powerList.clear();
 
@@ -110,7 +109,7 @@ public class ESQuery {
             }
 
         }
-        System.out.println("powerapiList: "+powerapiList.size()+", powerapiCIList: "+powerapiCIList.size() );
+        System.out.println("powerapiList: " + powerapiList.size() + ", powerapiCIList: " + powerapiCIList.size());
         return addEstimatedEnergyFormTests(powerapiCIList, powerapiList);
     }
 
@@ -234,11 +233,6 @@ public class ESQuery {
             }
             String[] test = testCSV.get(i).split("\n");
             List<TestData> testList = new ArrayList<TestData>();
-            for (String st : test) {
-                System.out.println("st: " +st);
-                testList.add(new TestData(st));
-            }
-
             powerapiCIList.add(findListPowerapiCI(powerapiList, testList));
         }
 
@@ -246,20 +240,17 @@ public class ESQuery {
         ResultatApplication resultatApplication = new ResultatApplication(debutApp, branch, buildName, commitName, appName, urlScm);
         resultatApplication = Converter.fillResultatApplication(resultatApplication, powerapiCIList, classes);
 
-        System.out.println("send");
         sendResultat(Constants.ACTUAL_INDEX, resultatApplication);
-        System.out.println("data correctly send");
     }
 
     public void sendResultat(String index, ResultatApplication resultatApplication) {
-        System.out.println("before header");
         /* Create header to send data */
         JsonObject header = Json.createObjectBuilder()
                 .add("_index", index)
                 .add("_type", "doc").build();
 
-        System.out.println("header: "+ header.toString());
-        System.out.println("resultat: "+ Converter.resultatApplicationToJson(resultatApplication));
+        System.out.println("header: " + header.toString());
+        System.out.println("resultat: " + Converter.resultatApplicationToJson(resultatApplication));
 
         String jsonToSend = header.toString() + "\n" + Converter.resultatApplicationToJson(resultatApplication);
 
@@ -295,15 +286,6 @@ public class ESQuery {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        System.out.println("Classes");
-        Set<String> key = classes.keySet();
-        for(String s : key){
-            System.out.println(s+": "+classes.get(s));
-        }
-
-        System.out.println("FinClasses");
-
 
         return classes;
     }
