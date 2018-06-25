@@ -1,5 +1,6 @@
 package com.powerapi;
 
+import com.google.gson.Gson;
 import com.powerapi.mylib.Constants;
 import com.powerapi.mylib.converter.Converter;
 import com.powerapi.mylib.json.ResultatApplication;
@@ -184,7 +185,7 @@ public class ESQuery {
                     timeFirst = (double) timeList.get(0);
                     powerFirst = powerList.get(0);
                     timeLast = (double) timeList.get(timeList.size() - 1);
-                    powerLast = (double) powerList.get(powerList.size() - 1);
+                    powerLast = powerList.get(powerList.size() - 1);
 
                     estimatedEnergyFromBeforeToFirst = Math.convertToJoule((powerBefore + powerFirst) / 2, (double) timeFirst - timeBefore);
                     estimatedEnergyFromLastToAfter = Math.convertToJoule((powerLast + powerAfter) / 2, (double) timeAfter - timeLast);
@@ -257,9 +258,6 @@ public class ESQuery {
         JsonObject header = Json.createObjectBuilder()
                 .add("_index", index)
                 .add("_type", "doc").build();
-
-        System.out.println("header: " + header.toString());
-        System.out.println("resultat: " + Converter.resultatApplicationToJson(resultatApplication));
 
         String jsonToSend = header.toString() + "\n" + Converter.resultatApplicationToJson(resultatApplication);
 

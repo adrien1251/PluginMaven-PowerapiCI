@@ -16,9 +16,6 @@ public class Converter {
 
 
     public static String resultatApplicationToJson(ResultatApplication resultatApplication) {
-        System.out.println("c: "+resultatApplication.getClasses().size());
-        System.out.println("m : "+resultatApplication.getClasses().get(0).getMethods().size());
-        System.out.println("i : "+resultatApplication.getClasses().get(0).getMethods().get(0).getIterations().size());
         return new Gson().toJson(resultatApplication) + "\n";
         /*JsonObject content = Json.createObjectBuilder()
                 .add("timestamp", resultatApplication.getTimestamp())
@@ -87,10 +84,7 @@ public class Converter {
         String lastClassName = "";
         for (PowerapiCI papici : powerapiCIList.get(0)) {
             if (!papici.getTestName().equals(lastTestName)) {
-                System.out.println("pas meme nom");
                 if (!classes.get(papici.getTestName()).equals(lastClassName)) {
-
-                    System.out.println("Added classes");
                     lastClassName = classes.get(papici.getTestName());
                     classeL.add(new Classe(lastClassName));
                 }
@@ -138,7 +132,6 @@ public class Converter {
             lastTestName = papici.getTestName();
         }
 
-        System.out.println("ClasseL: "+classeL.size());
         for (Classe c : classeL) {
             long duration = 0;
             for (Methods m : c.getMethods()) {
