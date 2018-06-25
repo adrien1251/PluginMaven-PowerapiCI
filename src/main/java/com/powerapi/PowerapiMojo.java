@@ -46,7 +46,7 @@ public class PowerapiMojo extends AbstractMojo {
 
         try {
             System.out.println("on execute..");
-            Process p = Runtime.getRuntime().exec(cmd);
+            Process p = Runtime.getRuntime().exec(cmd1);
             getLog().info(readProc(p));
 
             p.waitFor();
