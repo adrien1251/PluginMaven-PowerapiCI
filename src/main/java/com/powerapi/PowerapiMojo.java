@@ -22,7 +22,6 @@ public class PowerapiMojo extends AbstractMojo {
         executes();
         getLog().info("Data sending");
 
-
         System.out.println("powerapi");
         for(String st : powerapiCSVList){
             System.out.println(st);
@@ -33,7 +32,9 @@ public class PowerapiMojo extends AbstractMojo {
             System.out.println(st);
         }
 
-        new ESQuery().sendPowerapiciData(125412451, "MASTER", "40", "unname", "uneurl", powerapiCSVList, testCSVList, getXmlReport());
+        String xmlRepot = getXmlReport();
+        System.out.println("xmlReport: "+xmlRepot);
+        new ESQuery().sendPowerapiciData(125412451, "MASTER", "40", "unname", "uneurl", powerapiCSVList, testCSVList, xmlRepot);
 
         getLog().info("Data send");
     }
@@ -62,13 +63,14 @@ public class PowerapiMojo extends AbstractMojo {
 
     }
 
-    public String readProc(Process p) throws IOException, InterruptedException {
+    public String readProc(Process p) throws IOException {
         String retour = "";
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
         String line = "";
         while ((line = reader.readLine()) != null) {
             retour += line;
+            getLog().info(line);
         }
         reader.close();
 
@@ -83,8 +85,6 @@ public class PowerapiMojo extends AbstractMojo {
             retour += readProc(powerapiProc);
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (InterruptedException ie) {
-            ie.printStackTrace();
         }
         return retour;
     }
