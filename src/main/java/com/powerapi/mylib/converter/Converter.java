@@ -45,7 +45,7 @@ public class Converter {
                 JsonArray jsonAIterations = Json.createArrayBuilder().build();
                 for (Iteration i : m.getIterations()) {
                     JsonObject objectIteration = Json.createObjectBuilder()
-                            .add("n", i.getNumber())
+                            .add("n", i.getN())
                             .add("energy", i.getEnergy())
                             .add("time_begin", i.getTime_begin())
                             .add("time_end", i.getTime_end()).build();

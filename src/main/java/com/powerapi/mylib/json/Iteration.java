@@ -3,14 +3,14 @@ package com.powerapi.mylib.json;
 import java.util.List;
 
 public class Iteration {
-    private Integer number;
+    private Integer n;
     private double energy;
     private long time_begin;
     private long time_end;
     private List<PowerData> power_data;
 
     public Iteration(Integer number, double energy, long time_begin, long time_end, List<PowerData> power_data) {
-        this.number = number;
+        this.n = number;
         this.energy = energy;
         this.time_begin = time_begin;
         this.time_end = time_end;
@@ -18,18 +18,18 @@ public class Iteration {
     }
 
     public Iteration(Integer number, double energy, long time_begin, long time_end) {
-        this.number = number;
+        this.n = number;
         this.energy = energy;
         this.time_begin = time_begin;
         this.time_end = time_end;
     }
 
-    public Integer getNumber() {
-        return number;
+    public Integer getN() {
+        return n;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setN(Integer n) {
+        this.n = n;
     }
 
     public double getEnergy() {
