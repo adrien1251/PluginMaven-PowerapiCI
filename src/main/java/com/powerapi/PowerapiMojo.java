@@ -67,7 +67,7 @@ public class PowerapiMojo extends AbstractMojo {
     }
 
     public String getXmlReport() {
-        String[] cmd = {"sh", "-c", "cat target/surefire-reports/TEST-* | sed s/'testsuite>'/'testsuite>\n'/g | grep 'testsuite|testcase'"};
+        String[] cmd = {"sh", "-c", "cat target/surefire-reports/TEST-* | sed s/'testsuite>'/'testsuite>\\n'/g | grep 'testsuite\\|testcase'"};
         String retour = "";
         try {
             Process powerapiProc = Runtime.getRuntime().exec(cmd);
