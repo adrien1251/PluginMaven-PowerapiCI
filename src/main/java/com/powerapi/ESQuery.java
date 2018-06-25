@@ -229,12 +229,11 @@ public class ESQuery {
 
         for (int i = 0; i < powerapiCSV.size(); i++) {
             String[] powerapi = powerapiCSV.get(i).split("mW");
-            System.out.println(powerapi.length);
             List<PowerapiData> powerapiList = new ArrayList<PowerapiData>();
             for (String st : powerapi) {
                 powerapiList.add(new PowerapiData(st));
             }
-            System.out.println(testCSV);
+            System.out.println(testCSV.get(i));
             String[] test = testCSV.get(i).split("\n");
             List<TestData> testList = new ArrayList<TestData>();
             for (String st : test) {
