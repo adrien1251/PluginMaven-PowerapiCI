@@ -94,7 +94,7 @@ public class Converter {
                 if (!classes.get(papici.getTestName()).equals(lastClassName)) {
 
 
-                    System.out.println("On rajoute un classe");
+                    System.out.println("On rajoute une classe");
 
 
                     lastClassName = classes.get(papici.getTestName());
