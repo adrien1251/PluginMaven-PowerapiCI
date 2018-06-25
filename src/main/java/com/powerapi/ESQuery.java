@@ -239,6 +239,9 @@ public class ESQuery {
             }
             String[] test = testCSV.get(i).split("\n");
             List<TestData> testList = new ArrayList<TestData>();
+            for(String st : test){
+                testList.add(new TestData(st));
+            }
             powerapiCIList.add(findListPowerapiCI(powerapiList, testList));
         }
 
