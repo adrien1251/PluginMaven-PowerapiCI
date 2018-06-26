@@ -1,7 +1,5 @@
 package com.powerapi;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonParser;
 import com.powerapi.mylib.Constants;
 import com.powerapi.mylib.converter.Converter;
 import com.powerapi.mylib.json.ResultatApplication;
@@ -41,7 +39,7 @@ public class ESQuery {
             byte[] postDataBytes = queryString.getBytes("UTF-8");
             connection.getOutputStream().write(postDataBytes);
 
-            if (!(connection.getResponseCode() < HttpURLConnection.HTTP_BAD_REQUEST)) {
+            if (connection.getResponseCode() >= HttpURLConnection.HTTP_BAD_REQUEST) {
                 System.out.println("Youps.. Une erreur est survenue lors de l'envoie d'une donnée!");
                 System.out.println("Code: " + connection.getResponseCode() + ", " + connection.getResponseMessage());
             }
@@ -260,10 +258,10 @@ public class ESQuery {
                 .add("_index", index)
                 .add("_type", "doc").build();
 
-        String jsonToSend = header.toString() + "\n" + Converter.resultatApplicationToJson(resultatApplication);
+        String jsonToSend = /*header.toString() + "\n" +*/ Converter.resultatApplicationToJson(resultatApplication);
 
         System.out.println(jsonToSend);
-        sendPOSTMessage(Constants.ELASTIC_BULK_PATH, jsonToSend);
+        sendPOSTMessage(Constants.ELASTIC_PATH + index +"/doc", jsonToSend);
     }
 
     public static HashMap<String, String> parseSurefireXML(String xml) {

@@ -2,12 +2,8 @@ package com.powerapi.mylib.converter;
 
 import com.google.gson.Gson;
 import com.powerapi.PowerapiCI;
-import com.powerapi.mylib.Constants;
 import com.powerapi.mylib.json.*;
 
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
