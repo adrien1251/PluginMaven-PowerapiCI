@@ -16,8 +16,8 @@ public class Converter {
 
 
     public static String resultatApplicationToJson(ResultatApplication resultatApplication) {
-        //return new Gson().toJson(resultatApplication) + "\n";
-        JsonObject content = Json.createObjectBuilder()
+        return new Gson().toJson(resultatApplication) + "\n";
+        /*JsonObject content = Json.createObjectBuilder()
                 .add("timestamp", resultatApplication.getTimestamp())
                 .add("branch", resultatApplication.getBranch())
                 .add("build_url", Constants.BUILD_URL + resultatApplication.getBranch() + "/" + resultatApplication.getBuild_name() + "/pipeline")
@@ -73,7 +73,7 @@ public class Converter {
 
         content.put("classes", jsonAClasse);
 
-        return content.toString() + '\n';
+        return content.toString() + '\n';*/
     }
 
     public static ResultatApplication fillResultatApplication(ResultatApplication resultatApplication, List<List<PowerapiCI>> powerapiCIList, final Map<String, String> classes) {
