@@ -1,52 +1,24 @@
-package com.powerapi;
+package com.powerapi.service;
 
+import com.powerapi.PowerapiCI;
+import com.powerapi.PowerapiData;
+import com.powerapi.TestData;
+import com.powerapi.dao.PowerapiDao;
+import com.powerapi.dao.SurefireDao;
 import com.powerapi.mylib.Constants;
 import com.powerapi.mylib.converter.Converter;
 import com.powerapi.mylib.json.ResultatApplication;
 import com.powerapi.mylib.math.Math;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.ByteArrayInputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+public class PowerapiService {
+    private SurefireDao surefireDao = SurefireDao.getInstance();
 
 
-public class ESQuery {
-
-    /**
-     * Send Post data to an url
-     *
-     * @param url         the target to send
-     * @param queryString the query to send
-     */
-    public void sendPOSTMessage(String url, String queryString) {
-        try {
-            URL baseUrl = new URL(url);
-
-            HttpURLConnection connection = (HttpURLConnection) baseUrl.openConnection();
-            connection.setRequestProperty("Content-Type", "application/x-ndjson");
-
-            connection.setRequestMethod("POST");
-            connection.setDoOutput(true);
-
-            byte[] postDataBytes = queryString.getBytes("UTF-8");
-            connection.getOutputStream().write(postDataBytes);
-
-            if (connection.getResponseCode() >= HttpURLConnection.HTTP_BAD_REQUEST) {
-                System.out.println("Youps.. Une erreur est survenue lors de l'envoie d'une donnée!");
-                System.out.println("Code: " + connection.getResponseCode() + ", " + connection.getResponseMessage());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    private PowerapiDao powerapiDao = PowerapiDao.getInstance();
 
     /**
      * Aggregate two lists to return list<PowerapiCI>
@@ -55,14 +27,9 @@ public class ESQuery {
      * @param testList     list of TestData
      * @return list <PowerapiCI>
      */
-    public static List<PowerapiCI> findListPowerapiCI(List<PowerapiData> powerapiList, List<TestData> testList) {
+    public List<PowerapiCI> findListPowerapiCI(List<PowerapiData> powerapiList, List<TestData> testList) {
         List<PowerapiCI> powerapiCIList = new ArrayList<PowerapiCI>();
         ArrayList<Double> powerList = new ArrayList<Double>();
-
-
-        System.out.println("PowerapiList: "+powerapiList.size()+", testList: " +testList.size());
-
-
 
         while (!testList.isEmpty() && testList.size() >= 2) {
             powerList.clear();
@@ -115,11 +82,11 @@ public class ESQuery {
             }
 
         }
-        System.out.println("powerapiList: " + powerapiList.size() + ", powerapiCIList: " + powerapiCIList.size());
+
         return addEstimatedEnergyFormTests(powerapiCIList, powerapiList);
     }
 
-    public static List<PowerapiCI> addEstimatedEnergyFormTests(List<PowerapiCI> powerapiCIList, List<PowerapiData> powerapiList) {
+    public List<PowerapiCI> addEstimatedEnergyFormTests(List<PowerapiCI> powerapiCIList, List<PowerapiData> powerapiList) {
         String lastTestName = "";
         double timeBefore = 0;
         double timeAfter = 0;
@@ -220,14 +187,14 @@ public class ESQuery {
         return powerapiCIList;
     }
 
-    public void sendPowerapiciData(long debutApp, String branch, String buildName, String commitName, String urlScm, List<String> powerapiCSV, List<String> testCSV, String XMLClasses) {
+    public void sendPowerapiciData(long debutApp, String branch, String buildName, String commitName, String urlScm, List<String> powerapiCSV, List<String> testCSV) {
         if (powerapiCSV.isEmpty() || testCSV.isEmpty() || testCSV.size() != powerapiCSV.size()) {
             System.out.println("Listes vides ou pas de la même taille");
             return;
         }
 
         String appName = urlScm.substring(urlScm.lastIndexOf("/") + 1, urlScm.length() - 4);
-        Map<String, String> classes = ESQuery.parseSurefireXML(XMLClasses);
+        Map<String, String> classes = surefireDao.parseSurefireXML();
 
         List<List<PowerapiCI>> powerapiCIList = new ArrayList<List<PowerapiCI>>();
 
@@ -249,51 +216,6 @@ public class ESQuery {
         ResultatApplication resultatApplication = new ResultatApplication(debutApp, branch, buildName, commitName, appName, urlScm);
         resultatApplication = Converter.fillResultatApplication(resultatApplication, powerapiCIList, classes);
 
-        sendResultat(Constants.ACTUAL_INDEX, resultatApplication);
+        powerapiDao.sendResultat(Constants.ACTUAL_INDEX, resultatApplication);
     }
-
-    public void sendResultat(String index, ResultatApplication resultatApplication) {
-        /* Create header to send data */
-        JsonObject header = Json.createObjectBuilder()
-                .add("_index", index)
-                .add("_type", "doc").build();
-
-        String jsonToSend = /*header.toString() + "\n" +*/ Converter.resultatApplicationToJson(resultatApplication);
-
-        System.out.println(jsonToSend);
-        sendPOSTMessage(Constants.ELASTIC_PATH + index +"/doc", jsonToSend);
-    }
-
-    public static HashMap<String, String> parseSurefireXML(String xml) {
-
-        HashMap<String, String> classes = new HashMap<String, String>();
-
-        try {
-            DocumentBuilderFactory factory =
-                    DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-
-            ByteArrayInputStream input = new ByteArrayInputStream(("<test>" + xml + "</test>").getBytes());
-            Document doc = builder.parse(input);
-            doc.getDocumentElement().normalize();
-
-            NodeList nList = doc.getElementsByTagName("testsuite");
-
-            for (int i = 0; i < nList.getLength(); i++) {
-                Element element = (Element) nList.item(i);
-                NodeList testCaseNode = element.getElementsByTagName("testcase");
-
-                for (int j = 0; j < testCaseNode.getLength(); j++) {
-                    Element testCase = (Element) testCaseNode.item(j);
-                    classes.put(testCase.getAttribute("name"), ((Element) nList.item(i)).getAttribute("name"));
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return classes;
-    }
-
 }
