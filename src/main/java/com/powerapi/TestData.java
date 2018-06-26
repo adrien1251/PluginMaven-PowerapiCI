@@ -1,5 +1,10 @@
 package com.powerapi;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class TestData {
 
     private long timestamp;
@@ -17,29 +22,4 @@ public class TestData {
         }
 
     }
-
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public String getTestName() {
-        return testName;
-    }
-
-    public void setTestName(String testName) {
-        this.testName = testName;
-    }
-
-    public String getStartOrEnd() {
-        return startOrEnd;
-    }
-
-    public void setStartOrEnd(String startOrEnd) {
-        this.startOrEnd = startOrEnd;
-    }
-
 }

@@ -7,7 +7,7 @@ import com.powerapi.dao.PowerapiDao;
 import com.powerapi.dao.SurefireDao;
 import com.powerapi.mylib.Constants;
 import com.powerapi.mylib.converter.Converter;
-import com.powerapi.mylib.json.ResultatApplication;
+import com.powerapi.Entity.ResultatApplication;
 import com.powerapi.mylib.math.Math;
 
 import java.util.ArrayList;
@@ -28,8 +28,8 @@ public class PowerapiService {
      * @return list <PowerapiCI>
      */
     public List<PowerapiCI> findListPowerapiCI(List<PowerapiData> powerapiList, List<TestData> testList) {
-        List<PowerapiCI> powerapiCIList = new ArrayList<PowerapiCI>();
-        ArrayList<Double> powerList = new ArrayList<Double>();
+        List<PowerapiCI> powerapiCIList = new ArrayList<>();
+        ArrayList<Double> powerList = new ArrayList<>();
 
         while (!testList.isEmpty() && testList.size() >= 2) {
             powerList.clear();
@@ -52,7 +52,7 @@ public class PowerapiService {
 
             long testDurationInMs = endTest.getTimestamp() - beginTest.getTimestamp();
 
-            List<PowerapiData> allPowerapi = new ArrayList<PowerapiData>();
+            List<PowerapiData> allPowerapi = new ArrayList<>();
             for (PowerapiData papiD : powerapiList) {
                 if (papiD.getTimestamp() >= beginTest.getTimestamp() && papiD.getTimestamp() <= endTest.getTimestamp()) {
                     allPowerapi.add(papiD);
@@ -96,8 +96,8 @@ public class PowerapiService {
         Double powerAfter;
         Double powerFirst;
         Double powerLast;
-        ArrayList<Double> powerList = new ArrayList<Double>();
-        ArrayList<Long> timeList = new ArrayList<Long>();
+        ArrayList<Double> powerList = new ArrayList<>();
+        ArrayList<Long> timeList = new ArrayList<>();
         double totalEnergy;
         double estimatedEnergyFromBeforeToFirst;
         double estimatedEnergyFromLastToAfter;
@@ -130,7 +130,7 @@ public class PowerapiService {
                     }
                 }
 
-                allPowerapi = new ArrayList<PowerapiData>();
+                allPowerapi = new ArrayList<>();
                 for (PowerapiData papiD : powerapiList) {
                     if (papiD.getTimestamp() >= test.getTimestamp() && papiD.getTimestamp() <= test.getTimestamp()) {
                         allPowerapi.add(papiD);
@@ -196,16 +196,16 @@ public class PowerapiService {
         String appName = urlScm.substring(urlScm.lastIndexOf("/") + 1, urlScm.length() - 4);
         Map<String, String> classes = surefireDao.parseSurefireXML();
 
-        List<List<PowerapiCI>> powerapiCIList = new ArrayList<List<PowerapiCI>>();
+        List<List<PowerapiCI>> powerapiCIList = new ArrayList<>();
 
         for (int i = 0; i < powerapiCSV.size(); i++) {
             String[] powerapi = powerapiCSV.get(i).split("mW");
-            List<PowerapiData> powerapiList = new ArrayList<PowerapiData>();
+            List<PowerapiData> powerapiList = new ArrayList<>();
             for (String st : powerapi) {
                 powerapiList.add(new PowerapiData(st));
             }
             String[] test = testCSV.get(i).split("\n");
-            List<TestData> testList = new ArrayList<TestData>();
+            List<TestData> testList = new ArrayList<>();
             for(String st : test){
                 testList.add(new TestData(st));
             }

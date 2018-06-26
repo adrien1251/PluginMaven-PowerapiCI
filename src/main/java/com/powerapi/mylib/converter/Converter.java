@@ -2,7 +2,7 @@ package com.powerapi.mylib.converter;
 
 import com.google.gson.Gson;
 import com.powerapi.PowerapiCI;
-import com.powerapi.mylib.json.*;
+import com.powerapi.Entity.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,63 +13,6 @@ public class Converter {
 
     public static String resultatApplicationToJson(ResultatApplication resultatApplication) {
         return new Gson().toJson(resultatApplication) + "\n";
-        /*JsonObject content = Json.createObjectBuilder()
-                .add("timestamp", resultatApplication.getTimestamp())
-                .add("branch", resultatApplication.getBranch())
-                .add("build_url", Constants.BUILD_URL + resultatApplication.getBranch() + "/" + resultatApplication.getBuild_name() + "/pipeline")
-                .add("scm_url", resultatApplication.getScm_url())
-                .add("build_name", resultatApplication.getBuild_name())
-                .add("energy", resultatApplication.getEnergy())
-                .add("app_name", resultatApplication.getApp_name())
-                .add("duration", resultatApplication.getDuration())
-                .add("commit_name", resultatApplication.getCommit_name()).build();
-
-        JsonArray jsonAClasse = Json.createArrayBuilder().build();
-        for (Classe c : resultatApplication.getClasses()) {
-            JsonObject objectClasse = Json.createObjectBuilder()
-                    .add("name", c.getName())
-                    .add("energy", c.getEnergy())
-                    .add("duration", c.getDuration()).build();
-
-            JsonArray jsonAMethods = Json.createArrayBuilder().build();
-            for (Methods m : c.getMethods()) {
-                JsonObject objectMethod = Json.createObjectBuilder()
-                        .add("name", m.getName())
-                        .add("energy", m.getEnergy())
-                        .add("duration", m.getDuration()).build();
-
-                JsonArray jsonAIterations = Json.createArrayBuilder().build();
-                for (Iteration i : m.getIterations()) {
-                    JsonObject objectIteration = Json.createObjectBuilder()
-                            .add("n", i.getN())
-                            .add("energy", i.getEnergy())
-                            .add("time_begin", i.getTime_begin())
-                            .add("time_end", i.getTime_end()).build();
-
-                    JsonArray jsonAPowerdata = Json.createArrayBuilder().build();
-                    for (PowerData p : i.getPower_data()) {
-                        JsonObject objectPowerdata = Json.createObjectBuilder()
-                                .add("power", p.getPower())
-                                .add("timestamp", p.getTimestamp()).build();
-
-                        jsonAPowerdata.add(objectPowerdata);
-                    }
-                    objectIteration.put("power_data", jsonAPowerdata);
-
-                    jsonAIterations.add(objectIteration);
-                }
-                objectMethod.put("methods", jsonAIterations);
-
-                jsonAMethods.add(objectMethod);
-            }
-            objectClasse.put("classes", jsonAMethods);
-
-            jsonAClasse.add(objectClasse);
-        }
-
-        content.put("classes", jsonAClasse);
-
-        return content.toString() + '\n';*/
     }
 
     public static ResultatApplication fillResultatApplication(ResultatApplication resultatApplication, List<List<PowerapiCI>> powerapiCIList, final Map<String, String> classes) {

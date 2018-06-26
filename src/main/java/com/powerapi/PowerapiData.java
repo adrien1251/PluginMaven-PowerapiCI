@@ -1,5 +1,10 @@
 package com.powerapi;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class PowerapiData implements Comparable {
     private String muid;
     private String devices;
@@ -25,46 +30,4 @@ public class PowerapiData implements Comparable {
         }
 
     }
-
-    public String getMuid() {
-        return muid;
-    }
-
-    public void setMuid(String muid) {
-        this.muid = muid;
-    }
-
-    public String getDevices() {
-        return devices;
-    }
-
-    public void setDevices(String devices) {
-        this.devices = devices;
-    }
-
-    public String getTargets() {
-        return targets;
-    }
-
-    public void setTargets(String targets) {
-        this.targets = targets;
-    }
-
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public Double getPower() {
-        return power;
-    }
-
-    public void setPower(Double power) {
-        this.power = power;
-    }
-
-
 }
